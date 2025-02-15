@@ -1,0 +1,28 @@
+server:
+  port: 7573 # 网关服务端口
+
+spring:
+  application:
+    name: gateway-service # 服务名称
+  cloud:
+    gateway:
+      routes:
+        - id: uaa-service # 路由到 UAA 服务
+          uri: lb://uaa-service # 使用负载均衡
+          predicates:
+            - Path=/uaa/**
+          filters:
+            - StripPrefix=1 # 去除前缀
+        - id: product-service # 路由到 Product 服务
+          uri: lb://product-service # 使用负载均衡
+          predicates:
+            - Path=/products/**
+          filters:
+            - StripPrefix=1 # 去除前缀
+      default-filters:
+        - AddRequestHeader=Authorization, valid-token # 添加默认请求头
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Eureka 服务器地址

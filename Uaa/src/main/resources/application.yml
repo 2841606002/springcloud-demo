@@ -1,0 +1,49 @@
+server:
+  port: 8081 # 服务端口
+
+spring:
+  application:
+    name: uaa-service # 服务名称
+
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservice?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA 配置
+  jpa:
+    hibernate:
+      ddl-auto: update # 自动更新数据库表结构
+    show-sql: true # 打印 SQL 语句
+
+  # Spring Security OAuth2 配置
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: your-github-client-id # GitHub OAuth2 客户端 ID
+            client-secret: your-github-client-secret # GitHub OAuth2 客户端密钥
+            scope: user:email # 请求的用户权限范围
+
+  # LDAP 配置
+  ldap:
+    urls: ldap://localhost:389 # LDAP 服务器地址
+    base: dc=example,dc=com # LDAP 基础 DN
+    username: cn=admin,dc=example,dc=com # LDAP 管理员用户名
+    password: admin # LDAP 管理员密码
+
+# Eureka 客户端配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # Eureka 服务器地址
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    org.springframework.security: DEBUG
+    org.springframework.ldap: DEBUG

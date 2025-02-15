@@ -1,0 +1,4 @@
+jwt:
+  config:
+    key: my-secret-key # JWT 秘钥
+    exp: 3600000       # JWT 过期时间（1 小时）
